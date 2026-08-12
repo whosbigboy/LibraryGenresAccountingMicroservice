@@ -1,16 +1,49 @@
 package com.example.library_genres_registration;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-import java.util.List;     
-import java.util.Arrays;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/genres")
 public class GenreController {
-    
-    @GetMapping("/genres")
-    public List<String> getGenres() {
-        return Arrays.asList("Fiction", "Non-Fiction", "Science Fiction", "Fantasy", "Mystery", "Romance");
+
+    private final GenreService genreService;
+
+    public GenreController(GenreService genreService) {
+        this.genreService = genreService;
+    }
+
+    @GetMapping
+    public List<Genre> getAllGenres() {
+        return genreService.getAllGenres();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Genre> getGenreById(@PathVariable Long id) {
+        Optional<Genre> genre = genreService.getGenreById(id);
+        return genre.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @PostMapping
+    public ResponseEntity<Genre> createGenre(@RequestBody Genre genre) {
+        Genre createdGenre = genreService.create(genre);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdGenre);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Genre> updateGenre(@PathVariable Long id, @RequestBody Genre genreDetails) {
+        Optional<Genre> updatedGenre = genreService.update(id, genreDetails);
+        return updatedGenre.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteGenre(@PathVariable Long id) {
+        boolean deleted = genreService.delete(id);
+        return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 }
  
