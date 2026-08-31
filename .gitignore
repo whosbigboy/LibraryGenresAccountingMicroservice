@@ -3,9 +3,11 @@
 *.class
 *.o
 *.obj
+*.exe
+*.dll
+*.so
+*.a
 *.out
-build/
-target/
 
 # Dependencies
 node_modules/
@@ -21,6 +23,13 @@ __pycache__/
 *.tmp
 *.swp
 
+# Editors
+.vscode/
+.idea/
+*.iml
+*.ipr
+*.iws
+
 # Environment
 .env
 .env.local
@@ -32,9 +41,9 @@ __pycache__/
 *.swp
 *.swo
 
-# System files
-.DS_Store
-Thumbs.db
+# Package manager
+node_modules/
+**/node_modules/
 
 # Coverage reports
 coverage/
