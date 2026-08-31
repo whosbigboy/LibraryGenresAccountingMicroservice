@@ -46,4 +46,18 @@ public class GenreController {
         return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 }
+
+@RestController
+class HomeController {
+
+    @GetMapping("/")
+    public ResponseEntity<String> home() {
+        return ResponseEntity.ok("Library Genres Registration Service is running. Available endpoints:\n" +
+                "GET /genres - Get all genres\n" +
+                "GET /genres/{id} - Get genre by ID\n" +
+                "POST /genres - Create new genre\n" +
+                "PUT /genres/{id} - Update genre\n" +
+                "DELETE /genres/{id} - Delete genre");
+    }
+}
  
