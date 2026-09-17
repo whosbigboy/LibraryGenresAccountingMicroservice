@@ -1,0 +1,7 @@
+com\example\book_registration\BookController.class
+com\example\book_registration\BookRequest.class
+com\example\book_registration\GenreClient.class
+com\example\book_registration\Book.class
+com\example\book_registration\BookService.class
+com\example\book_registration\BookRegistrationApplication.class
+com\example\book_registration\BookRepository.class
