@@ -1,6 +1,7 @@
 package com.example.library_genres_registration;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,14 +30,14 @@ public class GenreController {
     }
 
     @PostMapping
-    public ResponseEntity<Genre> createGenre(@RequestBody Genre genre) {
-        Genre createdGenre = genreService.create(genre);
+    public ResponseEntity<Genre> createGenre(@RequestBody GenreRequest request) {
+        Genre createdGenre = genreService.create(request.toGenre());
         return ResponseEntity.status(HttpStatus.CREATED).body(createdGenre);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Genre> updateGenre(@PathVariable Long id, @RequestBody Genre genreDetails) {
-        Optional<Genre> updatedGenre = genreService.update(id, genreDetails);
+    public ResponseEntity<Genre> updateGenre(@PathVariable Long id, @RequestBody GenreRequest request) {
+        Optional<Genre> updatedGenre = genreService.update(id, request.toGenre());
         return updatedGenre.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
@@ -48,16 +49,10 @@ public class GenreController {
 }
 
 @RestController
+@RequestMapping("/")
 class HomeController {
-
-    @GetMapping("/")
-    public ResponseEntity<String> home() {
-        return ResponseEntity.ok("Library Genres Registration Service is running. Available endpoints:\n" +
-                "GET /genres - Get all genres\n" +
-                "GET /genres/{id} - Get genre by ID\n" +
-                "POST /genres - Create new genre\n" +
-                "PUT /genres/{id} - Update genre\n" +
-                "DELETE /genres/{id} - Delete genre");
+    @GetMapping
+    public String home() {
+        return "Welcome!";
     }
 }
- 
